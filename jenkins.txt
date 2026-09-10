@@ -1,0 +1,45 @@
+pipeline{
+    agent any{
+        stages{
+            stage('checkout'){
+                steps{
+                    git branch:'main',
+                    url:''
+                }
+            }
+            stage('compile'){
+                steps{
+                    bat 'javac TestFactorial Factorial'
+                }
+            }
+            stage('Test'){
+                steps{
+                    bat'java TestFactorial'
+                }
+            }
+            stage('Run'){
+                steps{
+                    bat 'java Factorial'
+                }
+            }
+            stage('package JAR'){
+                steps{
+                    bat'cfm jar Factorial.class,manifest.txt,factorial.jar'
+                }
+            }
+            stage('Archive JAR){
+                steps{
+                    bat'ArchiveArtifacts artifacts:'factorial.jar'
+                }
+            }
+            post{
+                success{
+                    echo'build,test were successfully completed'
+                }
+                failure{
+                    echo'All tests are failed'
+                }
+            }
+        }
+    }
+}
