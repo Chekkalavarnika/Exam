@@ -1,45 +1,54 @@
-pipeline{
-    agent any{
-        stages{
-            stage('checkout'){
-                steps{
-                    git branch:'main',
-                    url:''
-                }
+```groovy
+pipeline {
+    agent any
+
+    stages {
+        stage('checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/Chekkalavarnika/Exam.git'
             }
-            stage('compile'){
-                steps{
-                    bat 'javac TestFactorial Factorial'
-                }
+        }
+
+        stage('compile') {
+            steps {
+                bat 'javac TestFactorial.java Factorial.java'
             }
-            stage('Test'){
-                steps{
-                    bat'java TestFactorial'
-                }
+        }
+
+        stage('Test') {
+            steps {
+                bat 'java TestFactorial'
             }
-            stage('Run'){
-                steps{
-                    bat 'java Factorial'
-                }
+        }
+
+        stage('Run') {
+            steps {
+                bat 'java Factorial'
             }
-            stage('package JAR'){
-                steps{
-                    bat'cfm jar Factorial.class,manifest.txt,factorial.jar'
-                }
+        }
+
+        stage('package JAR') {
+            steps {
+                bat 'jar cfm factorial.jar manifest.txt Factorial.class'
             }
-            stage('Archive JAR){
-                steps{
-                    bat'ArchiveArtifacts artifacts:'factorial.jar'
-                }
-            }
-            post{
-                success{
-                    echo'build,test were successfully completed'
-                }
-                failure{
-                    echo'All tests are failed'
-                }
+        }
+
+        stage('Archive JAR') {
+            steps {
+                archiveArtifacts artifacts: 'factorial.jar'
             }
         }
     }
+
+    post {
+        success {
+            echo 'build, test were successfully completed'
+        }
+
+        failure {
+            echo 'All tests are failed'
+        }
+    }
 }
+```
