@@ -2,18 +2,19 @@ public class TestFactorial {
 
     public static void main(String[] args) {
 
-        if (Factorial.compute(5) == 120) {
-            System.out.println("Test 5 passed");
-        } else {
-            System.out.println("Test 5 failed");
-        }
+        try {
+            if (Factorial.compute(5) != 120) {
+                throw new AssertionError("Test failed for 5");
+            }
 
-        if (Factorial.compute(0) == 1) {
-            System.out.println("Test 0 passed");
-        } else {
-            System.out.println("Test 0 failed");
-        }
+            if (Factorial.compute(0) != 1) {
+                throw new AssertionError("Test failed for 0");
+            }
 
-        System.out.println("All tests completed.");
+            System.out.println("All tests passed.");
+
+        } catch (Exception e) {
+            System.out.println("Test failed: " + e.getMessage());
+        }
     }
 }
