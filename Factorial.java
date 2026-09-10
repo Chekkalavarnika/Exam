@@ -1,6 +1,6 @@
 public class Factorial {
 
-    static long factorial(int n) {
+    public static long compute(int n) {
         long result = 1;
 
         for (int i = 1; i <= n; i++) {
@@ -14,6 +14,6 @@ public class Factorial {
 
         int number = 7;
 
-        System.out.println("Factorial of " + number + " is " + factorial(number));
+        System.out.println("Factorial of " + number + " is " + compute(number));
     }
 }
